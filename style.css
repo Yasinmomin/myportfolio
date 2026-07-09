@@ -145,7 +145,7 @@ h2{
     display: grid;
      grid-template-columns: repeat(auto-fit,minmax(100px,2fr));
      height: 50px;
-     width: 150px;
+     width: 170px;
      margin: 0% auto;
     font-size: small;
 }
