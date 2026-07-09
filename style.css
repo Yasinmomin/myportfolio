@@ -37,7 +37,13 @@ a{
      text-decoration: none;
 
 }
-
+.nav-links{
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
 .name{
     font-weight: 600;
     color:black;
@@ -148,4 +154,25 @@ h2{
 }
 .cd:hover{
     transform: translateY(-5px);
+}
+@media (max-width:600px)  {
+    .nav-toogle{
+        display: block;
+    }
+
+    .nav-links{
+        display: none;
+        position: absolute;
+        flex-direction: column;
+        top: 70px;
+        right: 0;
+        background-color: whitesmoke;
+        padding: 20px 50px;
+        box-shadow: 0 2px 6px hsla(0, 0%, 100%, 0.005);
+        border-radius: 12px;
+    }
+
+   .nav-links.open{
+    display: flex;
+   }
 }
