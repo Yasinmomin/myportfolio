@@ -1,0 +1,131 @@
+body{
+    background-color:rgba(5, 49, 34, 0.705);
+
+}
+
+.share-tech-regular{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.share-tech-regular {
+  font-family: "Share Tech", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+a{
+    color: black;
+}
+
+.navbar{
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    box-shadow: 0 2px 6px hsl(0, 0%, 0%,0.5%);
+    border-radius: 12px;
+}
+
+.nav-links a{
+    margin-left: 25px;
+    color:black;
+    font-weight: 200;
+     text-decoration: none;
+
+}
+
+.name{
+    font-weight: 600;
+    color:black;
+    text-decoration:none ;
+}
+
+.hero{
+    text-align: center;
+    padding: 60px 20px;
+    
+}
+
+.avator{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px hsl(0, 0%, 0%,0.5%);
+}
+
+.btn{
+    background-color: whitesmoke;
+    color: black;
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-left:44% ;
+    margin-right: 44%;
+}
+
+.about{
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.card-grid{
+       display: grid;
+       grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+       gap: 25px;
+       max-width: 900;
+       margin: 0 auto;
+}
+
+.card{
+    background-color: whitesmoke;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px hsla(0, 0%, 100%, 0.005);
+    text-align: left;
+    transition: transform 0.2s ease;
+    display: grid;
+       grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+      
+    
+       
+    
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+.cr{
+    text-align: center;
+   
+    height: 200px;
+    width: 100%;
+   
+}
+.word{
+    padding: 20px 20px 60px 20px;
+    
+   
+}
+
+.card-body{
+    padding: 20px;
+}
+.tags span{
+          display: inline-block;
+          background-color: rgba(14, 41, 2, 0.705);
+    border-radius: 20px;
+    width: 60px;
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
