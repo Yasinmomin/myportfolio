@@ -129,3 +129,23 @@ a{
 h2{
     text-align: center;
 }
+.cd{
+     background-color: whitesmoke;
+    padding: 25px 25px 45px 20px ;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px hsla(0, 0%, 100%, 0.005);
+    text-align: center;
+    transition: transform 0.2s ease;
+    display: grid;
+     grid-template-columns: repeat(auto-fit,minmax(100px,2fr));
+     height: 50px;
+     width: 150px;
+     margin: 0% auto;
+    font-size: small;
+}
+.ww{
+     padding: 20px 20px 40px 20px;
+}
+.cd:hover{
+    transform: translateY(-5px);
+}
