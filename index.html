@@ -11,23 +11,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="navbar " >
+   
+      
 
-     <a class="name" href="#">Kylian dictator</a>
-
-   <nav  >
-        <button class="nav-toogle" id="navtoggle" aria-controls="navmenu">
-            ¶ menu
+ <nav class="navbar navbar-expand-sm bg-Dark grey text-white">
+   <div class="container-fluid">
+        <a class="navbar-brand" href="#">Kylian dictator</a>
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-       <ul class="nav-links share-tech-regula" id="navmenu">
-      <li>  <a href="index.html">Home</a></li>
-      <li>  <a href="mywork.html">Mywork</a></li>
-        <li><a href="contact.html">Contact</a> </li>
-        </ul>
-    </nav>
-  
-
-</header>
+    </button>
+   <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="mywork.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
     <section class="scroll-stage">
         <div class="sticky-wrap">
             <canvas id="frameCanvas">
