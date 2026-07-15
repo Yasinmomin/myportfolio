@@ -3,86 +3,952 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Arcade Central | Ultimate Gaming Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     
-        <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505;
+            color: #f8fafc; 
+            overflow-x: hidden;
+        }
+
+        h1, h2, .arcade-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Dynamic Animated Background */
+        .bg-animated {
+            background: linear-gradient(-45deg, #0f172a, #164e63, #3b0764, #020617);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism utilities */
+        .glass { 
+            background: rgba(15, 23, 42, 0.6); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Hover Effects */
+        .neon-glow { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .neon-glow:hover { 
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.7); 
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        /* Chat Pulse */
+        .chat-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); } 
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(6, 182, 212, 0); } 
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); } 
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #06b6d4; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0891b2; }
+
+        /* Loader */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-left-color: #06b6d4;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Yasin Animation Styles - ENHANCED */
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.3));
+            background-size: 100% 4px;
+            z-index: 15;
+        }
+
+        .yasin-letter {
+            opacity: 0;
+            transform: scale(3) translateZ(1000px);
+            filter: blur(10px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            color: #ffffff;
+            text-shadow: 0 0 10px #06b6d4, 0 0 30px #06b6d4, 0 0 50px #3b0764, 0 0 80px #d946ef;
+        }
+
+        .yasin-letter.visible {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+            filter: blur(0);
+        }
+
+        .yasin-letter.glitch {
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0%, 100% { transform: translate(0) skew(0deg); text-shadow: 0 0 10px #06b6d4, 0 0 30px #06b6d4; }
+            5% { transform: translate(-3px, 2px) skew(-5deg); text-shadow: -3px 0 #d946ef, 3px 0 #06b6d4; }
+            6% { transform: translate(0) skew(0deg); text-shadow: 0 0 10px #06b6d4, 0 0 30px #06b6d4; }
+            10% { transform: translate(3px, -2px) skew(5deg); text-shadow: 3px 0 #d946ef, -3px 0 #06b6d4; }
+            11% { transform: translate(0) skew(0deg); text-shadow: 0 0 10px #06b6d4, 0 0 30px #06b6d4; }
+        }
+
+        .floating-game-icon {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            border-radius: 16px;
+            opacity: 0;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.6), inset 0 0 15px rgba(255,255,255,0.4);
+            transition: left 2s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                        top 2s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                        transform 2.5s cubic-bezier(0.5, 0, 0.2, 1), 
+                        opacity 1s ease-out;
+            object-fit: cover;
+            z-index: 5;
+            border: 2px solid rgba(6, 182, 212, 0.8);
+        }
+        
+        .converge-target {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #06b6d4;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
 </head>
-<body>
-   
-      
+<body class="min-h-screen bg-animated">
 
- <nav class="navbar navbar-expand-sm bg-Dark grey text-white">
-   <div class="container-fluid">
-        <a class="navbar-brand" href="#">Kylian dictator</a>
-       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </button>
-   <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="mywork.html">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    <!-- INTRO ANIMATION SCREEN -->
+    <div id="introScreen" class="fixed inset-0 z-[60] bg-[#020617] overflow-hidden transition-opacity duration-1000">
+        <!-- Background Particle Canvas & Effects -->
+        <canvas id="introCanvas" class="absolute inset-0 w-full h-full"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617] pointer-events-none opacity-80"></div>
+        <div class="absolute inset-0 scanlines pointer-events-none opacity-30"></div>
+        <div id="introFlash" class="absolute inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-200 z-50"></div>
+        
+        <!-- Floating Game Icons Container -->
+        <div id="floatingIconsContainer" class="absolute inset-0 pointer-events-none"></div>
+
+        <!-- The "YASIN" Convergence Area -->
+        <div class="converge-target flex flex-col items-center justify-center">
+            <div id="yasinTextContainer" class="text-4xl sm:text-6xl md:text-8xl font-black text-white tracking-[0.1em] md:tracking-[0.15em] arcade-font hidden flex flex-wrap justify-center gap-2 md:gap-4 px-4">
+                <span class="yasin-letter">G</span>
+                <span class="yasin-letter">A</span>
+                <span class="yasin-letter">M</span>
+                <span class="yasin-letter">I</span>
+                <span class="yasin-letter">N</span>
+                <span class="yasin-letter">G</span>
+                <span class="yasin-letter">&nbsp;</span>
+                <span class="yasin-letter">H</span>
+                <span class="yasin-letter">U</span>
+                <span class="yasin-letter">B</span>
+               
+            </div>
+            <p id="yasinSubtext" class="text-cyan-300 font-mono text-sm md:text-lg tracking-[0.5em] uppercase opacity-0 mt-8 h-6"></p>
+        </div>
+
+        <div class="absolute bottom-10 z-30 flex w-full justify-center">
+            <button onclick="skipIntro()" class="text-slate-400 hover:text-white border border-slate-700 hover:border-cyan-500 bg-black/60 px-8 py-3 rounded-full backdrop-blur-md transition-all duration-300 arcade-font tracking-widest text-xs flex items-center gap-3 group shadow-lg shadow-cyan-900/20 hover:scale-105 hover:shadow-cyan-500/40">
+                SKIP INITIALIZATION 
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE OVERLAY -->
+    <div id="loginPage" class="fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-700">
+        <!-- Ambient grid backdrop -->
+        <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: linear-gradient(rgba(6,182,212,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.3) 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617] pointer-events-none"></div>
+
+        <div class="glass-panel p-0 rounded-2xl w-full max-w-4xl overflow-hidden relative animate-fade-up shadow-[0_0_80px_rgba(6,182,212,0.15)]" style="border: 1px solid rgba(6,182,212,0.25);">
+            <div class="grid md:grid-cols-5">
+
+                <!-- LEFT: Terminal readout panel (signature element) -->
+                <div class="md:col-span-2 bg-slate-950/80 p-8 border-r border-cyan-900/40 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute inset-0 scanlines opacity-10 pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></div>
+                            <span class="text-[10px] font-mono text-green-400 tracking-[0.3em] uppercase">System Online</span>
+                        </div>
+                        <h1 class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500 tracking-tighter italic mb-1">ARCADE CENTRAL</h1>
+                        <p class="text-slate-500 font-mono text-[11px] tracking-widest uppercase mb-8">Access Terminal v2.4</p>
+
+                        <div class="space-y-3 font-mono text-xs">
+                            <div class="flex justify-between border-b border-slate-800 pb-2">
+                                <span class="text-slate-500">LIBRARY_SIZE</span>
+                                <span id="loginLibCount" class="text-cyan-300 font-bold">— TITLES</span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-800 pb-2">
+                                <span class="text-slate-500">GENRES</span>
+                                <span class="text-cyan-300 font-bold">7 ACTIVE</span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-800 pb-2">
+                                <span class="text-slate-500">ASSISTANT</span>
+                                <span class="text-cyan-300 font-bold">ARCADE BOT</span>
+                            </div>
+                            <div class="flex justify-between pb-2">
+                                <span class="text-slate-500">STATUS</span>
+                                <span class="text-green-400 font-bold flex items-center gap-1.5">READY <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="relative z-10 text-slate-400 text-xs leading-relaxed mt-8 border-l-2 border-cyan-500/40 pl-3">
+                        Every session syncs your library instantly. No downloads, no waiting — just launch and play.
+                    </p>
+                </div>
+
+                <!-- RIGHT: Auth form -->
+                <div class="md:col-span-3 p-8 md:p-10 relative">
+                    <div class="absolute -top-24 -right-24 w-56 h-56 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                    <div class="absolute -bottom-24 -left-10 w-56 h-56 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+                    <div class="relative z-10">
+                        <h2 class="text-2xl font-bold text-white mb-1 arcade-font">Player Sign-In</h2>
+                        <p class="text-slate-400 text-sm mb-8">Enter your details to sync progress and unlock the library.</p>
+
+                        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-5">
+                            <div class="text-left">
+                                <label class="block text-xs text-cyan-400 font-bold uppercase tracking-wider mb-2">Gamer Tag</label>
+                                <input type="text" id="username" required placeholder="Enter your username" 
+                                       class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition placeholder-slate-600">
+                            </div>
+                            <div class="text-left">
+                                <label class="block text-xs text-cyan-400 font-bold uppercase tracking-wider mb-2">Passcode</label>
+                                <input type="password" required placeholder="••••••••" 
+                                       class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition placeholder-slate-600">
+                            </div>
+
+                            <button type="submit" id="loginBtn" class="w-full mt-2 bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-cyan-500/30 transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2 arcade-font tracking-wide text-sm">
+                                <span>ENTER ARCADE</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            </button>
+
+                            <p class="text-center text-slate-600 text-[11px] pt-2">No account needed — any Gamer Tag will do.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MAIN APPLICATION (Hidden by default) -->
+    <div id="mainApp" class="hidden min-h-screen pb-20 opacity-0 transition-opacity duration-1000">
+        
+        <header class="glass sticky top-0 z-40 p-4 flex justify-between items-center px-6 md:px-12 border-b border-cyan-900/50 shadow-2xl">
+            <h1 class="text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500 tracking-tighter italic">ARCADE CENTRAL</h1>
+            <div class="flex items-center gap-4">
+                <button onclick="document.getElementById('profileCard').classList.toggle('hidden')" class="bg-slate-800/80 px-4 py-2 rounded-full border border-slate-700 hover:border-cyan-500 transition shadow-lg flex items-center gap-2">
+                    <span class="bg-cyan-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold text-black">👤</span>
+                    <span id="displayUsername" class="hidden md:inline font-semibold">Player</span>
+                </button>
+            </div>
+        </header>
+
+        <div id="profileCard" class="hidden absolute right-6 md:right-12 top-20 glass-panel p-6 rounded-2xl w-72 z-50 animate-fade-up" style="animation-duration: 0.3s;">
+            <div class="flex items-center gap-4 mb-4 border-b border-slate-700 pb-4">
+                <div class="bg-cyan-500 rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold text-black">👤</div>
+                <div>
+                    <h3 id="cardUsername" class="font-bold text-cyan-400 text-lg">Player</h3>
+                    <p class="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded inline-block mt-1">Level 42 Pro</p>
+                </div>
+            </div>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex justify-between"><span>Games Played:</span> <span class="text-white font-bold">14</span></li>
+                <li class="flex justify-between"><span>Achievements:</span> <span class="text-white font-bold">38</span></li>
+                <li class="flex justify-between"><span>Status:</span> <span class="text-green-400 font-bold">Online</span></li>
             </ul>
+            <button onclick="logout()" class="w-full mt-6 bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500 hover:text-white py-2 rounded-lg transition text-sm font-bold">
+                Disconnect
+            </button>
+        </div>
+
+        <main class="p-6 md:p-12 max-w-7xl mx-auto">
+            
+            <!-- Hero Description Section -->
+            <div class="glass-panel rounded-3xl p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center gap-8 shadow-2xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/80 to-transparent"></div>
+                
+                <div class="relative z-10 md:w-2/3">
+                    <h2 class="text-4xl md:text-5xl font-black text-white mb-4 leading-tight arcade-font">DISCOVER YOUR NEXT <span class="text-cyan-400">OBSESSION.</span></h2>
+                    <p class="text-slate-300 text-lg mb-6 leading-relaxed">
+                        Explore our vast library of premium titles. Whether you are looking for high-octane <b>Battle Royales</b>, deeply immersive <b>RPGs</b>, or quick <b>Arcade</b> thrills, Arcade Central is your gateway to infinite worlds.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 w-full md:w-auto flex-1">
+                            <h4 class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">Age Ratings Filter</h4>
+                            <select id="ageFilter" onchange="applyFilters()" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-cyan-500">
+                                <option value="All">All Ages</option>
+                                <option value="Everyone">Everyone (E)</option>
+                                <option value="Teen">Teen (T)</option>
+                                <option value="Mature">Mature (M)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-col lg:flex-row gap-6 mb-10 items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-slate-800 backdrop-blur-md">
+                <div class="flex flex-wrap gap-2 md:gap-3" id="categoriesBar">
+                    <button class="px-4 py-2 rounded-full bg-cyan-600 text-white transition font-semibold text-xs md:text-sm shadow-lg shadow-cyan-600/30 filter-btn" data-cat="All">All</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="Action">Action</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="Battle Royale">Battle Royale</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="RPG">RPG</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="Arcade">Arcade</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="Horror">Horror</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="Sci-Fi">Sci-Fi</button>
+                    <button class="px-4 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition font-semibold text-xs md:text-sm filter-btn" data-cat="Sports">Sports</button>
+                </div>
+
+                <div class="w-full lg:w-72 relative">
+                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search library..." 
+                           class="bg-slate-950 border border-slate-700 rounded-full pl-10 pr-6 py-2.5 w-full focus:ring-2 ring-cyan-500 outline-none transition text-sm text-white placeholder-slate-500" 
+                           onkeyup="applyFilters()">
+                </div>
+            </div>
+
+            <!-- Game Grid -->
+            <div id="gameGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <!-- Games will be injected here via JS -->
+            </div>
+            
+            <div id="noResults" class="hidden text-center py-20">
+                <div class="text-6xl mb-4">🎮</div>
+                <h3 class="text-2xl font-bold text-slate-300">No games found</h3>
+                <p class="text-slate-500 mt-2">Try searching for a different title or category.</p>
+            </div>
+        </main>
+
+        <!-- Chatbot -->
+        <button onclick="toggleChat()" class="fixed bottom-8 right-8 bg-gradient-to-r from-cyan-600 to-blue-600 p-4 rounded-full shadow-2xl shadow-cyan-500/50 chat-pulse z-50 hover:scale-110 transition border border-cyan-400">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        </button>
+        
+        <div id="chatWindow" class="fixed bottom-24 right-8 w-80 h-[26rem] glass-panel rounded-2xl hidden flex-col z-50 shadow-2xl overflow-hidden animate-fade-up transform origin-bottom-right">
+            <div class="p-4 bg-slate-900/80 border-b border-cyan-900 font-bold flex justify-between items-center text-cyan-400 arcade-font">
+                <span class="flex items-center gap-2"><div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> Arcade Bot</span>
+                <button onclick="toggleChat()" class="hover:text-white text-slate-400 transition text-xl leading-none">&times;</button>
+            </div>
+            <div id="chatLog" class="flex-1 p-4 overflow-y-auto text-sm space-y-4 text-slate-200">
+                <div class="flex flex-col gap-1">
+                    <span class="text-xs text-cyan-500 font-bold uppercase tracking-wider">Arcade Bot</span>
+                    <div class="bg-slate-800/80 p-3 rounded-xl rounded-tl-none border border-slate-700">
+                        Hello! Looking for a specific genre or title? Tell me what you're in the mood for (e.g. "Find me an RPG").
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 bg-slate-900/90 border-t border-slate-800 flex gap-2">
+                <input type="text" id="chatInput" placeholder="Type message..." 
+                       class="flex-1 bg-slate-950 border border-slate-700 px-4 py-2 rounded-full text-white text-sm outline-none focus:ring-1 focus:ring-cyan-500 transition placeholder-slate-600" 
+                       onkeypress="if(event.key==='Enter') handleChat()">
+                <button onclick="handleChat()" class="bg-cyan-600 p-2 rounded-full text-white hover:bg-cyan-500 transition flex items-center justify-center w-10 h-10 shadow-lg">
+                    <svg class="w-4 h-4 translate-x-[-1px] translate-y-[1px]" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+                </button>
+            </div>
         </div>
     </div>
-</nav>
-    <section class="scroll-stage">
-        <div class="sticky-wrap">
-            <canvas id="frameCanvas">
-            </canvas>
-            <div class="overlay-text">
-                <h1 class="space-grotesk-new">Light Yagami</h1>
-                <p class="share-tech-regular">Hi I Am Light Yagami,I a College Student whose aim to clear all bad people
-                    from the world , one at a time</p>
-            </div>
-            <div class="progress-track">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-        </div>
-    </section>
 
-<section class="hero">
-    <img src="https://s.yimg.com/ny/api/res/1.2/w29cUdzQ3N0fUjzjoBPpwg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTk0NTtjZj13ZWJw/https://media.zenfs.com/en/know_your_meme_909/65a23d4ab7cfc126c71a703b05865a7c" alt="" class="avator">
-    <h1>kylian dictator</h1>
-    <p class="share-tech-regular">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur dolore, eveniet fuga voluptatibus est accusamus, iusto cum ipsam aperiam, vero numquam. Perspiciatis rerum maxime facere corporis laborum deserunt facilis explicabo! </p>
-    <a href="contact.html" class="btn share-tech-regular">Get in Touch</a>
-</section>
+    <script>
+        // --- Intro Animation Logic ---
+        let introTimeout1, introTimeout2, introTimeout3;
+        let animationFrameId;
 
-<section class="about">
+        document.addEventListener('DOMContentLoaded', () => {
+            initIntroAnimation();
+        });
 
-    
-    <h2>A Little About me</h2>
+        function initIntroAnimation() {
+            const container = document.getElementById('floatingIconsContainer');
+            const yasinContainer = document.getElementById('yasinTextContainer');
+            const subtext = document.getElementById('yasinSubtext');
+            const introScreen = document.getElementById('introScreen');
+            const flash = document.getElementById('introFlash');
+            const canvas = document.getElementById('introCanvas');
+            
+            if(!container || !introScreen || !canvas) return;
 
-    <div class="card-grid">
-   
-    <div class="card">
-    <h3>My Education </h3>
-    <p>I am a BCA Student in KLE Lingaraj College Belgaum</p>
-    </div>
+            // --- Canvas Starfield / Warp Effect ---
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+            
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
 
-    <div class="card">
-    <h3>My Skills </h3>
-    <p>HTML5, CSS3, JavaScript, Python, SQL</p>
-    </div>
+            const stars = [];
+            const numStars = window.innerWidth < 768 ? 200 : 500;
+            let warpSpeed = 0.3; // Initial slow drift
+            let warpActive = false;
 
-    <div class="card">
-    <h3>My Hobbies </h3>
-    <p>Gaming, Coding, Traveling, Football</p>
-    </div>
+            for(let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * width - width/2,
+                    y: Math.random() * height - height/2,
+                    z: Math.random() * 1000
+                });
+            }
 
-    </div>
+            function drawStars() {
+                // Clear with opacity for trail effect
+                ctx.fillStyle = 'rgba(2, 6, 23, 0.4)'; 
+                ctx.fillRect(0, 0, width, height);
+                
+                const cx = width / 2;
+                const cy = height / 2;
+                
+                for(let i = 0; i < numStars; i++) {
+                    const star = stars[i];
+                    star.z -= warpSpeed;
+                    
+                    if(star.z <= 0) {
+                        star.z = 1000;
+                        star.x = Math.random() * width - width/2;
+                        star.y = Math.random() * height - height/2;
+                    }
+                    
+                    const k = 128.0 / star.z;
+                    const px = star.x * k + cx;
+                    const py = star.y * k + cy;
+                    
+                    if(px >= 0 && px <= width && py >= 0 && py <= height) {
+                        const size = (1 - star.z / 1000) * 2.5;
+                        
+                        if (warpActive) {
+                            // Draw lightspeed streaks
+                            const pzLast = star.z + warpSpeed;
+                            const kLast = 128.0 / pzLast;
+                            const pxLast = star.x * kLast + cx;
+                            const pyLast = star.y * kLast + cy;
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(pxLast, pyLast);
+                            ctx.lineTo(px, py);
+                            ctx.strokeStyle = `rgba(6, 182, 212, ${1 - star.z/1000})`;
+                            ctx.lineWidth = size * 1.5;
+                            ctx.stroke();
+                        } else {
+                            // Draw distant stars
+                            ctx.fillStyle = `rgba(103, 232, 249, ${1 - star.z/1000})`;
+                            ctx.beginPath();
+                            ctx.arc(px, py, size, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                }
+                animationFrameId = requestAnimationFrame(drawStars);
+            }
+            drawStars();
 
-</section>
+            // --- Icon Spawn ---
+            const iconUrls = games.slice(0, 25).map(g => g.img);
+            const icons = [];
 
-<footer class="share-tech-regular ">
-        <p>copyright @ 2026 Yasin momin</p>
-    </footer>
+            for (let i = 0; i < 25; i++) {
+                const img = document.createElement('img');
+                img.src = iconUrls[i % iconUrls.length];
+                img.className = 'floating-game-icon';
+                
+                // Spawn way outside the viewport edges
+                const startX = Math.random() > 0.5 ? (Math.random() * 20 - 20) + 'vw' : (Math.random() * 20 + 100) + 'vw';
+                const startY = Math.random() > 0.5 ? (Math.random() * 20 - 20) + 'vh' : (Math.random() * 20 + 100) + 'vh';
+                
+                img.style.left = startX;
+                img.style.top = startY;
+                
+                const scale = 0.5 + Math.random() * 1.2;
+                const rot = Math.random() * 360;
+                img.style.transform = `scale(${scale}) rotate(${rot}deg)`;
+                
+                container.appendChild(img);
+                icons.push(img);
 
-<script src="script.js"></script>
+                // Fade in sequentially
+                setTimeout(() => { img.style.opacity = '0.9'; }, i * 60);
+            }
+
+            // 1. Vortex Pull & Hyperspace
+            introTimeout1 = setTimeout(() => {
+                warpActive = true;
+                
+                // Accelerate starfield rapidly
+                let speedInterval = setInterval(() => {
+                    warpSpeed += 2;
+                    if(warpSpeed > 50) clearInterval(speedInterval);
+                }, 30);
+
+                // Suck icons into the center
+                icons.forEach((img, i) => {
+                    img.style.left = '50%';
+                    img.style.top = '50%';
+                    // Add massive rotation to simulate a black hole
+                    img.style.transform = `translate(-50%, -50%) scale(0) rotate(${1080 + Math.random()*720}deg)`;
+                    img.style.opacity = '0';
+                });
+            }, 2500);
+
+            // 2. Flash & "YASIN" Reveal
+            introTimeout2 = setTimeout(() => {
+                // Instantly halt hyperspace
+                warpSpeed = 0.1; 
+                warpActive = false;
+                
+                // Flashbang effect
+                flash.classList.remove('opacity-0');
+                flash.classList.add('opacity-100');
+                setTimeout(() => {
+                    flash.classList.remove('opacity-100');
+                    flash.classList.add('opacity-0');
+                }, 150);
+
+                yasinContainer.classList.remove('hidden');
+                
+                requestAnimationFrame(() => {
+                    const letters = document.querySelectorAll('.yasin-letter');
+                    
+                    // Reveal letters with a slight stagger
+                    letters.forEach((l, index) => {
+                        setTimeout(() => {
+                            l.classList.add('visible');
+                            // Add glitch sporadically to letters
+                            setTimeout(() => { l.classList.add('glitch'); }, 1500 + (Math.random() * 2500));
+                        }, index * 120);
+                    });
+                    
+                    // Typewriter subtext
+                    setTimeout(() => {
+                        subtext.classList.remove('opacity-0');
+                        subtext.classList.add('opacity-100', 'typewriter-cursor');
+                        
+                        const text = "System Override // Gaming Hub Initialized...";
+                        let charIdx = 0;
+                        let typeInterval = setInterval(() => {
+                            subtext.innerText += text.charAt(charIdx);
+                            charIdx++;
+                            if(charIdx >= text.length) {
+                                clearInterval(typeInterval);
+                                setTimeout(() => subtext.classList.remove('typewriter-cursor'), 2000);
+                            }
+                        }, 40);
+                    }, 800);
+                });
+            }, 4500);
+
+            // 3. Auto-transition to login
+            introTimeout3 = setTimeout(() => {
+                skipIntro();
+            }, 9000);
+        }
+
+        function skipIntro() {
+            clearTimeout(introTimeout1);
+            clearTimeout(introTimeout2);
+            clearTimeout(introTimeout3);
+            if(animationFrameId) cancelAnimationFrame(animationFrameId);
+
+            const intro = document.getElementById('introScreen');
+            if(!intro || intro.classList.contains('hidden')) return;
+            
+            intro.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                intro.classList.add('hidden');
+                const loginPage = document.getElementById('loginPage');
+                if(loginPage) {
+                    loginPage.classList.remove('hidden');
+                    loginPage.classList.remove('opacity-0');
+                }
+            }, 1000);
+        }
+
+        // Updated Game Array with expanded genres, ages, and real images.
+        // Using high quality Steam/Epic/Official headers
+        const fallbackBase = "https://placehold.co/600x400/0f172a/06b6d4?font=montserrat&text=";
+        
+        const games = [
+            // ACTION
+            { name: "Counter-Strike 2", category: "Action", age: "Mature", desc: "The legendary team-based tactical shooter.", url: "https://www.counter-strike.net", img: "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg" },
+            { name: "God of War", category: "Action", age: "Mature", desc: "Epic mythology-based action-adventure.", url: "https://www.playstation.com/en-us/games/god-of-war/", img: "https://cdn.akamai.steamstatic.com/steam/apps/1593500/header.jpg" },
+            { name: "Red Dead Redemption 2", category: "Action", age: "Mature", desc: "Epic tale of life in America's unforgiving heartland.", url: "https://www.rockstargames.com/reddeadredemption2", img: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg" },
+            { name: "Devil May Cry 5", category: "Action", age: "Mature", desc: "Stylish demon-slaying action from Capcom.", url: "https://www.devilmaycry.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/601150/header.jpg" },
+            { name: "Sekiro: Shadows Die Twice", category: "Action", age: "Mature", desc: "Brutal shinobi action from FromSoftware.", url: "https://www.sekirothegame.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/814380/header.jpg" },
+            { name: "Marvel's Spider-Man Remastered", category: "Action", age: "Teen", desc: "Swing through New York as the friendly neighborhood hero.", url: "https://www.playstation.com/en-us/games/marvels-spider-man-remastered/", img: "https://cdn.akamai.steamstatic.com/steam/apps/1817070/header.jpg" },
+            { name: "Ghost of Tsushima", category: "Action", age: "Mature", desc: "Open-world samurai epic set in feudal Japan.", url: "https://www.playstation.com/en-us/games/ghost-of-tsushima/", img: "https://cdn.akamai.steamstatic.com/steam/apps/2215430/header.jpg" },
+            { name: "Metal Gear Solid V: The Phantom Pain", category: "Action", age: "Mature", desc: "Open-world tactical espionage action.", url: "https://www.konami.com/mgs5/tpp/", img: "https://cdn.akamai.steamstatic.com/steam/apps/287700/header.jpg" },
+            { name: "Hitman World of Assassination", category: "Action", age: "Mature", desc: "Stealth assassination sandbox across the globe.", url: "https://www.hitman.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1659040/header.jpg" },
+
+            // BATTLE ROYALE
+            { name: "Fortnite", category: "Battle Royale", age: "Teen", desc: "100-player battle royale with building mechanics.", url: "https://www.fortnite.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2513400/header.jpg" },
+            { name: "Apex Legends", category: "Battle Royale", age: "Teen", desc: "Fast-paced squad-based hero shooter.", url: "https://www.ea.com/apex-legends", img: "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg" },
+            { name: "Call of Duty: Warzone", category: "Battle Royale", age: "Mature", desc: "Massive free-to-play combat arena.", url: "https://www.callofduty.com/warzone", img: "https://cdn.akamai.steamstatic.com/steam/apps/1962663/header.jpg" },
+            { name: "PUBG: BATTLEGROUNDS", category: "Battle Royale", age: "Teen", desc: "The original battle royale experience.", url: "https://pubg.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg" },
+            { name: "Naraka: Bladepoint", category: "Battle Royale", age: "Teen", desc: "Melee-focused martial arts battle royale.", url: "https://www.narakathegame.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1203220/header.jpg" },
+            { name: "Fall Guys", category: "Battle Royale", age: "Everyone", desc: "Massively multiplayer party obstacle course.", url: "https://www.fallguys.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1097150/header.jpg" },
+
+            // RPG
+            { name: "Cyberpunk 2077", category: "RPG", age: "Mature", desc: "Action-adventure RPG set in Night City.", url: "https://cyberpunk.net", img: "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg" },
+            { name: "Baldur's Gate 3", category: "RPG", age: "Mature", desc: "Epic Dungeons & Dragons RPG adventure.", url: "https://baldursgate3.game", img: "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg" },
+            { name: "The Witcher 3: Wild Hunt", category: "RPG", age: "Mature", desc: "Story-driven, next-generation open world role-playing.", url: "https://thewitcher.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg" },
+            { name: "Elden Ring", category: "RPG", age: "Mature", desc: "Massive dark fantasy action RPG by FromSoftware.", url: "https://eldenring.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg" },
+            { name: "Genshin Impact", category: "RPG", age: "Teen", desc: "Anime-style open-world action role-playing.", url: "https://genshin.hoyoverse.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2381610/header.jpg" },
+            { name: "Stardew Valley", category: "RPG", age: "Everyone", desc: "Relaxing farming simulation RPG.", url: "https://stardewvalley.net", img: "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg" },
+            { name: "Persona 5 Royal", category: "RPG", age: "Mature", desc: "Stylish turn-based JRPG about phantom thieves.", url: "https://persona.atlus.com/p5r/", img: "https://cdn.akamai.steamstatic.com/steam/apps/1687950/header.jpg" },
+            { name: "Divinity: Original Sin 2", category: "RPG", age: "Mature", desc: "Deep tactical fantasy RPG with co-op.", url: "https://larian.com/games/divinity-original-sin-2", img: "https://cdn.akamai.steamstatic.com/steam/apps/435150/header.jpg" },
+            { name: "Diablo IV", category: "RPG", age: "Mature", desc: "Dark, gothic action RPG dungeon crawler.", url: "https://diablo4.blizzard.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2344520/header.jpg" },
+            { name: "Final Fantasy XIV", category: "RPG", age: "Teen", desc: "Massively multiplayer online fantasy RPG.", url: "https://www.finalfantasyxiv.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/39210/header.jpg" },
+            { name: "Disco Elysium", category: "RPG", age: "Mature", desc: "Groundbreaking narrative detective RPG.", url: "https://discoelysium.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/632470/header.jpg" },
+
+            // HORROR
+            { name: "Resident Evil Village", category: "Horror", age: "Mature", desc: "Survival horror in a terrifying snowy village.", url: "https://www.residentevil.com/village/", img: "https://cdn.akamai.steamstatic.com/steam/apps/1196590/header.jpg" },
+            { name: "Dead Space", category: "Horror", age: "Mature", desc: "Sci-fi survival horror masterpiece remake.", url: "https://www.ea.com/games/dead-space", img: "https://cdn.akamai.steamstatic.com/steam/apps/1693980/header.jpg" },
+            { name: "Phasmophobia", category: "Horror", age: "Teen", desc: "4-player online co-op psychological horror.", url: "https://kineticgames.co.uk/", img: "https://cdn.akamai.steamstatic.com/steam/apps/739630/header.jpg" },
+            { name: "Amnesia: The Dark Descent", category: "Horror", age: "Mature", desc: "A first person survival horror about immersion, discovery, and living through a nightmare.", url: "https://frictionalgames.com/games/amnesia-the-dark-descent/", img: "https://cdn.akamai.steamstatic.com/steam/apps/57300/header.jpg" },
+            { name: "Outlast", category: "Horror", age: "Mature", desc: "Hell is an experiment you can't survive in this first-person survival horror game.", url: "https://redbarrelsgames.com/games/outlast/", img: "https://cdn.akamai.steamstatic.com/steam/apps/238320/header.jpg" },
+            { name: "Alan Wake 2", category: "Horror", age: "Mature", desc: "Psychological survival horror sequel.", url: "https://www.alanwake.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1741960/header.jpg" },
+            { name: "Dead by Daylight", category: "Horror", age: "Mature", desc: "Asymmetrical 4v1 survival horror multiplayer.", url: "https://deadbydaylight.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/381210/header.jpg" },
+            { name: "The Forest", category: "Horror", age: "Mature", desc: "Open-world survival horror on a mysterious island.", url: "https://survivetheforest.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/242760/header.jpg" },
+
+            // SCI-FI
+            { name: "Mass Effect Legendary Edition", category: "Sci-Fi", age: "Mature", desc: "The definitive cinematic space opera saga.", url: "https://www.ea.com/games/mass-effect/mass-effect-legendary-edition", img: "https://cdn.akamai.steamstatic.com/steam/apps/1328670/header.jpg" },
+            { name: "No Man's Sky", category: "Sci-Fi", age: "Teen", desc: "Infinite procedurally generated universe exploration.", url: "https://www.nomanssky.com/", img: "https://cdn.akamai.steamstatic.com/steam/apps/275850/header.jpg" },
+            { name: "Starfield", category: "Sci-Fi", age: "Mature", desc: "Bethesda's next-generation space exploration RPG.", url: "https://starfieldgame.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1716740/header.jpg" },
+            { name: "Halo Infinite", category: "Sci-Fi", age: "Teen", desc: "The Master Chief returns to explore the epic expanse of a Zeta Halo ring.", url: "https://www.halowaypoint.com/halo-infinite", img: "https://cdn.akamai.steamstatic.com/steam/apps/1240440/header.jpg" },
+            { name: "Doom Eternal", category: "Sci-Fi", age: "Mature", desc: "Hell's armies have invaded Earth. Become the Slayer.", url: "https://slayersclub.bethesda.net/en-us/doom-eternal", img: "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg" },
+            { name: "Deep Rock Galactic", category: "Sci-Fi", age: "Teen", desc: "Co-op sci-fi mining and combat.", url: "https://www.deeprockgalactic.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/548430/header.jpg" },
+            { name: "Destiny 2", category: "Sci-Fi", age: "Teen", desc: "Online multiplayer sci-fi shared-world shooter.", url: "https://www.bungie.net/destiny", img: "https://cdn.akamai.steamstatic.com/steam/apps/1085660/header.jpg" },
+            { name: "Warframe", category: "Sci-Fi", age: "Teen", desc: "Free-to-play sci-fi ninja action co-op.", url: "https://www.warframe.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/230410/header.jpg" },
+            { name: "Subnautica", category: "Sci-Fi", age: "Teen", desc: "Underwater survival and exploration on an alien ocean world.", url: "https://unknownworlds.com/subnautica/", img: "https://cdn.akamai.steamstatic.com/steam/apps/264710/header.jpg" },
+
+            // SPORTS
+            { name: "EA SPORTS FC 24", category: "Sports", age: "Everyone", desc: "The next chapter in The World's Game.", url: "https://ea.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2195250/header.jpg" },
+            { name: "Forza Horizon 5", category: "Sports", age: "Everyone", desc: "Open-world racing festival in Mexico.", url: "https://forzamotorsport.net", img: "https://cdn.akamai.steamstatic.com/steam/apps/1551360/header.jpg" },
+            { name: "Rocket League", category: "Sports", age: "Everyone", desc: "High-octane vehicular soccer.", url: "https://www.rocketleague.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/252950/header.jpg" },
+            { name: "NBA 2K24", category: "Sports", age: "Everyone", desc: "Authentic basketball simulation.", url: "https://nba2k.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2338770/header.jpg" },
+            { name: "F1 24", category: "Sports", age: "Everyone", desc: "Official Formula 1 racing simulation.", url: "https://www.ea.com/games/f1/f1-24", img: "https://cdn.akamai.steamstatic.com/steam/apps/2488620/header.jpg" },
+            { name: "WWE 2K24", category: "Sports", age: "Teen", desc: "Authentic professional wrestling simulation.", url: "https://wwe.2k.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2315690/header.jpg" },
+            { name: "Tony Hawk's Pro Skater 1+2", category: "Sports", age: "Teen", desc: "Remastered classic skateboarding action.", url: "https://tonyhawkthegame.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1088090/header.jpg" },
+
+            // ARCADE / INDIE
+            { name: "Minecraft", category: "Arcade", age: "Everyone", desc: "Endless sandbox survival and creative building.", url: "https://www.minecraft.net", img: "https://cdn.akamai.steamstatic.com/steam/apps/1672970/header.jpg" },
+            { name: "Among Us", category: "Arcade", age: "Teen", desc: "Multiplayer game of teamwork and betrayal.", url: "https://innersloth.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/945360/header.jpg" },
+            { name: "Hades", category: "Arcade", age: "Teen", desc: "God-like rogue-like dungeon crawler.", url: "https://supergiantgames.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg" },
+            { name: "Hollow Knight", category: "Arcade", age: "Everyone", desc: "Atmospheric insectoid metroidvania.", url: "https://teamcherry.com.au", img: "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg" },
+            { name: "Celeste", category: "Arcade", age: "Everyone", desc: "Precision platforming about climbing a mountain.", url: "https://celestegame.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg" },
+            { name: "Cuphead", category: "Arcade", age: "Everyone", desc: "Classic run and gun with 1930s animation style.", url: "https://studiohr.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/268910/header.jpg" },
+            { name: "Geometry Dash", category: "Arcade", age: "Everyone", desc: "Rhythm-based action platformer.", url: "https://robtopgames.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/322170/header.jpg" },
+            { name: "Portal 2", category: "Arcade", age: "Everyone", desc: "Mind-bending physics puzzle platformer.", url: "https://thinkwithportals.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg" },
+            { name: "Terraria", category: "Arcade", age: "Teen", desc: "2D action-adventure sandbox.", url: "https://terraria.org", img: "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg" },
+            { name: "It Takes Two", category: "Arcade", age: "Everyone", desc: "Award-winning co-op adventure for two players.", url: "https://www.ea.com/games/it-takes-two", img: "https://cdn.akamai.steamstatic.com/steam/apps/1426210/header.jpg" },
+            { name: "Stray", category: "Arcade", age: "Everyone", desc: "Explore a cyberpunk city as a stray cat.", url: "https://www.annapurnainteractive.com/games/stray", img: "https://cdn.akamai.steamstatic.com/steam/apps/1332010/header.jpg" },
+            { name: "Slay the Spire", category: "Arcade", age: "Everyone", desc: "Deck-building rogue-like card battler.", url: "https://www.megacrit.com/", img: "https://cdn.akamai.steamstatic.com/steam/apps/646570/header.jpg" },
+            { name: "Vampire Survivors", category: "Arcade", age: "Teen", desc: "Addictive minimalist rogue-like survival action.", url: "https://poncle.itch.io/vampire-survivors", img: "https://cdn.akamai.steamstatic.com/steam/apps/1794680/header.jpg" },
+            { name: "Balatro", category: "Arcade", age: "Everyone", desc: "Poker-inspired rogue-like deck-builder.", url: "https://www.playbalatro.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/2379780/header.jpg" },
+            { name: "Overcooked! 2", category: "Arcade", age: "Everyone", desc: "Chaotic co-op cooking simulator.", url: "https://www.teaml17.com/games/overcooked-2/", img: "https://cdn.akamai.steamstatic.com/steam/apps/728880/header.jpg" },
+            { name: "Human: Fall Flat", category: "Arcade", age: "Everyone", desc: "Physics-based puzzle platformer comedy.", url: "https://www.humanfallflat.com", img: "https://cdn.akamai.steamstatic.com/steam/apps/477160/header.jpg" }
+        ];
+
+        // Populate login screen readout with live library size
+        document.addEventListener('DOMContentLoaded', () => {
+            const el = document.getElementById('loginLibCount');
+            if (el) el.textContent = games.length + ' TITLES';
+        });
+
+        
+        // --- Authentication Logic ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const username = document.getElementById('username').value;
+            
+            // Simulate loading state
+            btn.innerHTML = `<div class="loader"></div> <span>AUTHENTICATING...</span>`;
+            
+            setTimeout(() => {
+                // Update UI with user info
+                document.getElementById('displayUsername').innerText = username;
+                document.getElementById('cardUsername').innerText = username;
+                
+                // Transition screens
+                const loginPage = document.getElementById('loginPage');
+                const mainApp = document.getElementById('mainApp');
+                
+                loginPage.classList.add('opacity-0');
+                setTimeout(() => {
+                    loginPage.classList.add('hidden');
+                    mainApp.classList.remove('hidden');
+                    // Small delay to allow display:block to apply before changing opacity
+                    setTimeout(() => {
+                        mainApp.classList.remove('opacity-0');
+                        // Render games with staggered animation on first load
+                        displayGames(games, true);
+                    }, 50);
+                }, 700);
+            }, 1000);
+        }
+
+        function logout() {
+            document.getElementById('profileCard').classList.add('hidden');
+            const mainApp = document.getElementById('mainApp');
+            const loginPage = document.getElementById('loginPage');
+            
+            mainApp.classList.add('opacity-0');
+            setTimeout(() => {
+                mainApp.classList.add('hidden');
+                loginPage.classList.remove('hidden');
+                // Reset login form
+                document.getElementById('loginBtn').innerHTML = `<span>ENTER ARCADE</span> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>`;
+                document.getElementById('loginForm').reset();
+                setTimeout(() => {
+                    loginPage.classList.remove('opacity-0');
+                }, 50);
+            }, 700);
+        }
+
+        // --- Game Rendering & Filtering ---
+        function displayGames(gamesList, animate = false) {
+            const grid = document.getElementById('gameGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if(gamesList.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            
+            grid.innerHTML = gamesList.map((g, index) => {
+                // Determine category color for badges
+                let badgeColor = 'bg-cyan-900/50 text-cyan-300 border-cyan-700';
+                if(g.category === 'Action') badgeColor = 'bg-red-900/50 text-red-300 border-red-700';
+                if(g.category === 'RPG') badgeColor = 'bg-purple-900/50 text-purple-300 border-purple-700';
+                if(g.category === 'Battle Royale') badgeColor = 'bg-orange-900/50 text-orange-300 border-orange-700';
+                if(g.category === 'Horror') badgeColor = 'bg-slate-900/80 text-red-500 border-red-900 shadow-[0_0_10px_rgba(220,38,38,0.5)]';
+                if(g.category === 'Sci-Fi') badgeColor = 'bg-blue-900/50 text-blue-300 border-blue-700';
+                if(g.category === 'Sports') badgeColor = 'bg-green-900/50 text-green-300 border-green-700';
+
+                // Age rating badge
+                let ageBadgeColor = 'bg-slate-800 text-slate-300 border-slate-600';
+                let ageText = g.age;
+                if(g.age === 'Mature') { ageBadgeColor = 'bg-red-900/30 text-red-400 border-red-800/50'; ageText = 'M'; }
+                if(g.age === 'Teen') { ageBadgeColor = 'bg-yellow-900/30 text-yellow-400 border-yellow-800/50'; ageText = 'T'; }
+                if(g.age === 'Everyone') { ageBadgeColor = 'bg-green-900/30 text-green-400 border-green-800/50'; ageText = 'E'; }
+
+                // Staggered animation classes
+                const animDelay = animate ? `style="animation-delay: ${index * 0.05}s"` : '';
+                const animClass = animate ? 'animate-fade-up' : '';
+                
+                // Fallback URL formatting
+                const safeName = g.name.replace(/\s+/g, '+');
+                const fallbackImage = `${fallbackBase}${safeName}`;
+
+                return `
+                    <div class="game-card glass-panel p-5 rounded-2xl neon-glow flex flex-col h-full ${animClass}" ${animDelay}>
+                        <div class="relative overflow-hidden rounded-xl mb-4 group aspect-video bg-slate-800">
+                            <!-- High quality fallback mechanism -->
+                            <img src="${g.img}" 
+                                 onerror="this.onerror=null; this.src='${fallbackImage}';" 
+                                 class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" 
+                                 alt="${g.name}" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-80"></div>
+                            <div class="absolute top-2 right-2 border rounded-md px-1.5 py-0.5 text-[10px] font-bold ${ageBadgeColor} shadow-md backdrop-blur-sm" title="Age Rating: ${g.age}">${ageText}</div>
+                        </div>
+                        
+                        <div class="flex-1 flex flex-col">
+                            <h3 class="text-xl font-bold truncate mb-2 arcade-font tracking-wide">${g.name}</h3>
+                            <div class="mb-3">
+                                <span class="text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full border ${badgeColor}">${g.category}</span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-6 flex-1 line-clamp-2">${g.desc}</p>
+                            
+                            <a href="${g.url}" target="_blank" class="w-full block text-center bg-slate-800 hover:bg-cyan-600 text-white border border-slate-700 hover:border-cyan-500 py-3 rounded-xl text-sm font-bold transition duration-300 shadow-lg">LAUNCH TITLE</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Filtering Logic (Combined Category, Age, and Search) ---
+        let currentCategory = 'All';
+
+        // Add event listeners to category buttons
+        document.addEventListener('DOMContentLoaded', () => {
+             const filterBtns = document.querySelectorAll('.filter-btn');
+             filterBtns.forEach(btn => {
+                 btn.addEventListener('click', (e) => {
+                     // Update active button styling
+                     filterBtns.forEach(b => {
+                         b.classList.remove('bg-cyan-600', 'text-white', 'shadow-lg', 'shadow-cyan-600/30');
+                         b.classList.add('bg-slate-800', 'text-slate-300');
+                     });
+                     e.target.classList.remove('bg-slate-800', 'text-slate-300');
+                     e.target.classList.add('bg-cyan-600', 'text-white', 'shadow-lg', 'shadow-cyan-600/30');
+                     
+                     currentCategory = e.target.getAttribute('data-cat');
+                     applyFilters(true); // Animate when clicking categories
+                 });
+             });
+        });
+
+        function applyFilters(animate = false) {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const ageFilter = document.getElementById('ageFilter').value;
+
+            const filtered = games.filter(g => {
+                const matchesCategory = currentCategory === 'All' || g.category === currentCategory;
+                const matchesAge = ageFilter === 'All' || g.age === ageFilter;
+                const matchesSearch = g.name.toLowerCase().includes(searchQuery) || 
+                                      g.category.toLowerCase().includes(searchQuery) || 
+                                      g.desc.toLowerCase().includes(searchQuery);
+                
+                return matchesCategory && matchesAge && matchesSearch;
+            });
+
+            displayGames(filtered, animate);
+        }
+
+        // --- Chat Bot Logic ---
+        function toggleChat() { 
+            const chat = document.getElementById('chatWindow');
+            if(chat.classList.contains('hidden')) {
+                chat.classList.remove('hidden');
+                document.getElementById('chatInput').focus();
+            } else {
+                chat.classList.add('hidden');
+            }
+        }
+
+        function handleChat() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim().toLowerCase();
+            if (!msg) return;
+            
+            const log = document.getElementById('chatLog');
+            
+            // User Message
+            log.innerHTML += `
+                <div class="flex flex-col gap-1 items-end mt-4">
+                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">You</span>
+                    <div class="bg-cyan-600 text-white p-3 rounded-xl rounded-tr-none shadow-lg">
+                        ${input.value}
+                    </div>
+                </div>
+            `;
+            
+            // Bot Response Generation
+            setTimeout(() => {
+                // Split the message into meaningful words (ignore tiny filler words)
+                const stopWords = new Set(['a','an','the','is','are','of','in','on','for','to','and','or','with','game','games','me','find','show','about','give','info','information']);
+                const words = msg.split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w));
+
+                // Score each game by how many of the searched words it matches
+                const scored = games.map(g => {
+                    const haystack = (g.name + ' ' + g.category + ' ' + g.desc).toLowerCase();
+                    let score = 0;
+                    // Reward a direct full-phrase match highly (handles short exact searches)
+                    if (haystack.includes(msg) && msg.length > 2) score += 5;
+                    words.forEach(w => { if (haystack.includes(w)) score += 1; });
+                    return { g, score };
+                }).filter(item => item.score > 0)
+                  .sort((a, b) => b.score - a.score);
+
+                const matches = scored.map(item => item.g);
+
+                let response = "";
+
+                if (matches.length === 1 || (matches.length > 1 && scored[0].score > scored[1].score * 1.5)) {
+                    const found = matches[0];
+                    response = `
+                        <div class="flex items-center gap-3 mb-2">
+                            <img src="${found.img}" alt="${found.name}" class="w-14 h-14 rounded-lg object-cover border border-slate-700" onerror="this.onerror=null; this.src='${fallbackBase}${found.name.replace(/\s+/g,'+')}';">
+                            <div>
+                                <p class="font-bold text-white">${found.name}</p>
+                                <p class="text-xs text-slate-400">${found.category} • ${found.age}</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-300 text-xs mb-3">${found.desc}</p>
+                        <a href="${found.url}" target="_blank" class="block w-full text-center bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 rounded-lg text-xs transition">OPEN ${found.name.toUpperCase()}</a>
+                    `;
+                } else if (matches.length > 1) {
+                    response = `I found <b>${matches.length}</b> matching titles:<div class="space-y-2 mt-2">` +
+                        matches.slice(0, 5).map(g => `
+                            <div class="flex items-center justify-between gap-2 bg-slate-900/60 p-2 rounded-lg border border-slate-700">
+                                <span class="text-sm font-semibold">${g.name}</span>
+                                <a href="${g.url}" target="_blank" class="bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full transition">OPEN</a>
+                            </div>
+                        `).join('') + `</div>`;
+                } else if(msg.includes("hello") || msg.includes("hi")) {
+                    response = "Greetings, player! How can I assist you in navigating the Arcade today?";
+                } else {
+                    response = "My sensors didn't pick up a match for that. Try searching for genres like 'RPG' or specific titles!";
+                }
+
+                log.innerHTML += `
+                    <div class="flex flex-col gap-1 mt-4">
+                        <span class="text-xs text-cyan-500 font-bold uppercase tracking-wider">Arcade Bot</span>
+                        <div class="bg-slate-800/80 p-3 rounded-xl rounded-tl-none border border-slate-700 text-slate-200 shadow-lg">
+                            ${response}
+                        </div>
+                    </div>
+                `;
+                log.scrollTop = log.scrollHeight;
+            }, 500);
+
+            input.value = '';
+            log.scrollTop = log.scrollHeight;
+        }
+    </script>
 </body>
 </html>
